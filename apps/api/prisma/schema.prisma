@@ -1,0 +1,231 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ========= ENUM TYPES =========
+enum UserRole {
+  PATIENT
+  DOCTOR
+  PHARMACIST
+  HOSPITAL_ADMIN
+}
+
+enum AISessionSource {
+  APP
+  PHONE_CALL
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+enum PrescriptionStatus {
+  PENDING
+  APPROVED
+  DENIED
+  COMPLETED
+}
+
+enum WebhookStatus {
+  PENDING
+  PROCESSED
+  FAILED
+}
+
+// ========= IDENTITY & ORGANIZATIONAL MODELS =========
+
+model User {
+  id                  String         @id @db.Uuid
+  phone               String?        @unique
+  email               String?        @unique
+  passwordHash        String? // For staff login
+  role                UserRole
+  hospitalId          String?        @db.Uuid // For staff hospital association
+  passwordTemp        Boolean?       @default(false) // For temporary passwords
+  forcePasswordChange Boolean?       @default(false) // Force password change on first login
+  lastLogin           DateTime?
+  loginAttempts       Int?           @default(0)
+  lockoutUntil        DateTime?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @default(now())
+  profile             Profile?
+  patient             Patient?
+  doctor              Doctor?
+  pharmacist          Pharmacists?
+  hospitalAdmin       HospitalAdmin?
+  hospital            Hospital?      @relation(fields: [hospitalId], references: [id], onDelete: SetNull)
+
+  // Constraint: phone or email must be provided
+  @@index([email])
+  @@index([phone])
+  @@index([hospitalId])
+  @@map("users")
+}
+
+model Profile {
+  userId          String  @id @db.Uuid
+  fullName        String
+  profileImageUrl String?
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model Hospital {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String
+  address        String?
+  createdAt      DateTime        @default(now())
+  doctors        Doctor[]
+  pharmacists    Pharmacists[]
+  hospitalAdmins HospitalAdmin[]
+  users          User[]
+
+  @@map("hospitals")
+}
+
+// ========= ROLE-SPECIFIC PROFILE MODELS =========
+
+model Doctor {
+  userId        String               @id @db.Uuid
+  hospitalId    String               @db.Uuid
+  specialty     String?
+  user          User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hospital      Hospital             @relation(fields: [hospitalId], references: [id], onDelete: Restrict)
+  appointments  Appointment[]
+  prescriptions Prescription[]       @relation("DoctorPrescriptions")
+  availability  DoctorAvailability[]
+
+  @@map("doctors")
+}
+
+model Patient {
+  userId        String         @id @db.Uuid
+  dateOfBirth   DateTime?
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appointments  Appointment[]
+  prescriptions Prescription[] @relation("PatientPrescriptions")
+  aiSessions    AISession[]
+
+  @@map("patients")
+}
+
+model Pharmacists {
+  userId        String         @id @db.Uuid
+  hospitalId    String         @db.Uuid
+  pharmacyName  String?
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hospital      Hospital       @relation(fields: [hospitalId], references: [id], onDelete: Restrict)
+  prescriptions Prescription[] @relation("PharmacistPrescriptions")
+
+  @@map("pharmacists")
+}
+
+model HospitalAdmin {
+  userId     String   @id @db.Uuid
+  hospitalId String   @db.Uuid
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hospital   Hospital @relation(fields: [hospitalId], references: [id], onDelete: Restrict)
+
+  @@map("hospital_admins")
+}
+
+// ========= OPERATIONAL & INTEGRATION MODELS =========
+
+model AISession {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId     String          @db.Uuid
+  source        AISessionSource
+  vapiSessionId String?
+  twilioCallId  String?
+  transcript    String?
+  summary       String?
+  startTime     DateTime        @default(now())
+  patient       Patient         @relation(fields: [patientId], references: [userId], onDelete: Cascade)
+
+  @@index([patientId])
+  @@map("ai_sessions")
+}
+
+model Appointment {
+  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  calBookingId  String            @unique
+  patientId     String?           @db.Uuid
+  doctorId      String            @db.Uuid
+  startTs       DateTime
+  endTs         DateTime
+  status        AppointmentStatus
+  calRawPayload Json?
+  lastSyncedAt  DateTime?
+  createdAt     DateTime          @default(now())
+  patient       Patient?          @relation(fields: [patientId], references: [userId], onDelete: SetNull)
+  doctor        Doctor            @relation(fields: [doctorId], references: [userId], onDelete: Cascade)
+
+  @@index([patientId, startTs])
+  @@index([doctorId, startTs])
+  @@map("appointments")
+}
+
+model Prescription {
+  id           String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId    String             @db.Uuid
+  doctorId     String             @db.Uuid
+  pharmacistId String?            @db.Uuid
+  medications  Json
+  status       PrescriptionStatus @default(PENDING)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime?
+  patient      Patient            @relation("PatientPrescriptions", fields: [patientId], references: [userId], onDelete: Restrict)
+  doctor       Doctor             @relation("DoctorPrescriptions", fields: [doctorId], references: [userId], onDelete: Restrict)
+  pharmacist   Pharmacists?       @relation("PharmacistPrescriptions", fields: [pharmacistId], references: [userId], onDelete: SetNull)
+
+  @@index([patientId])
+  @@index([doctorId])
+  @@index([pharmacistId])
+  @@map("prescriptions")
+}
+
+model DoctorAvailability {
+  id        Int      @id @default(autoincrement())
+  doctorId  String   @db.Uuid
+  dayOfWeek Int // 1 for Monday, 7 for Sunday
+  startTime DateTime @db.Time(6)
+  endTime   DateTime @db.Time(6)
+  doctor    Doctor   @relation(fields: [doctorId], references: [userId], onDelete: Cascade)
+
+  @@index([doctorId])
+  @@map("doctor_availability")
+}
+
+model CalWebhook {
+  id              Int           @id @default(autoincrement())
+  rawWebhookBody  Json?
+  signatureHeader String?
+  status          WebhookStatus @default(PENDING)
+  processedAt     DateTime?
+  notes           String?
+
+  @@map("cal_webhooks")
+}
+
+// ========= AUTHENTICATION MODEL =========
+
+model Otp {
+  id        Int      @id @default(autoincrement())
+  number    String // Phone number without +
+  otp       Int // 4-digit OTP code
+  createdAt DateTime @default(now())
+
+  @@index([number])
+  @@index([createdAt])
+  @@map("otps")
+}

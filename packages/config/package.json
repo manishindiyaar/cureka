@@ -1,0 +1,11 @@
+{
+  "name": "config",
+  "version": "1.0.0",
+  "description": "Shared configurations (ESLint, TypeScript)",
+  "private": true,
+  "main": "index.js",
+  "files": [
+    "tsconfig/*",
+    "eslint-preset.js"
+  ]
+}

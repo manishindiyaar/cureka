@@ -1,0 +1,5 @@
+pnpm dlx prisma db push
+npx prisma studio
+
+
+pnpm tsc --noEmit
