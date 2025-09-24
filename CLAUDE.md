@@ -4,11 +4,21 @@
 - make sure u write node test for each function 
 - for the database use supabase hosted db.
 
+- Completed Story for mobile_app  Story-0-File-Structure-Setup.md - File structure setup and configuration
+  Story-0.1-Authentication-UI.md -> these two are executed properly.
 
-Start with by setting up Supabase DB with Prisma first Implement /Users/manish/Desktop/cureka/stories/story-db01-supabase-setup.md
+- auth api is i m able to get otp and able to login with otp with proper token based approach bacally basic apis are done.
+
+- we will be working with @mobile_app/cureka directory.and we will use react native with expo for making the app.
+
+
+- i have created the app_prd.md for the mobile hope u follow that.
+
 
 
 for the backend u are working on apps/api directory.
 
-- always use pnpm
-- write test only using node js , do not use framework or any library. keep all the tests in sara_tests directory.
+
+- write test only using node js , do not use framework or any library. keep all the tests for backend_api in sara_tests directory.
+- lets start working on the android appps @apps/mobile/ make sure first start working on the stories first.
+

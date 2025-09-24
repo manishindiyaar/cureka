@@ -1,0 +1,1 @@
+{"version":3,"file":"hospitals.controller.d.ts","sourceRoot":"","sources":["../../../../src/api/v1/hospitals/hospitals.controller.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAI5C,qBAAa,mBAAmB;WACjB,cAAc,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;WA+D1C,WAAW,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;CA6BrD"}

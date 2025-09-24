@@ -1,5 +1,5 @@
 pnpm dlx prisma db push
 npx prisma studio
 
-
-pnpm tsc --noEmit
+#this is for checking linter errors
+pnpm tsc --noEmit 

@@ -24,11 +24,13 @@ app.get('/health', (_req: Request, res: Response) => {
 import authRoutes from './api/v1/auth/index.js';
 import doctorsRoutes from './api/v1/doctors/doctors.routes.js';
 import hospitalsRoutes from './api/v1/hospitals/hospitals.routes.js';
+import appointmentRoutes from './api/v1/appointments/appointments.routes.js';
 
 // API routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/doctors', doctorsRoutes);
 app.use('/api/v1/hospitals', hospitalsRoutes);
+app.use('/api/v1/appointments', appointmentRoutes);
 
 // Default route
 app.get('/', (_req: Request, res: Response) => {

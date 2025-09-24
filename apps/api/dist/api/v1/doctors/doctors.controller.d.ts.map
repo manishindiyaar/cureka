@@ -1,0 +1,1 @@
+{"version":3,"file":"doctors.controller.d.ts","sourceRoot":"","sources":["../../../../src/api/v1/doctors/doctors.controller.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAK5C,qBAAa,iBAAiB;WACf,YAAY,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;WAmFxC,SAAS,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;CA6BnD"}
