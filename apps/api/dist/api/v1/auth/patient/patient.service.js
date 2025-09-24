@@ -1,4 +1,5 @@
 import { prisma } from '../../../../lib/prisma.js';
+import crypto from 'crypto';
 export class PatientService {
     static async findUserByPhone(phoneNumber) {
         return await prisma.user.findUnique({

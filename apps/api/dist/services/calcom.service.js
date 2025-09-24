@@ -74,7 +74,7 @@ export class CalComService {
             throw new Error(`Failed to create Cal.com booking: ${error.message}`);
         }
     }
-    async checkDoctorAvailability(doctorId, datetime) {
+    async checkDoctorAvailability(_doctorId, _datetime) {
         try {
             return true;
         }

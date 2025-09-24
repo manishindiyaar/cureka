@@ -21,7 +21,7 @@ export declare class CalComService {
     private api;
     constructor(apiKey: string, baseURL?: string);
     createBooking(bookingRequest: CalBookingRequest): Promise<CalBookingResponse>;
-    checkDoctorAvailability(doctorId: string, datetime: Date): Promise<boolean>;
+    checkDoctorAvailability(_doctorId: string, _datetime: Date): Promise<boolean>;
     cancelBooking(bookingId: string): Promise<boolean>;
     getBookingDetails(bookingId: string): Promise<any>;
     private calculateDuration;

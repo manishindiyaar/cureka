@@ -1,5 +1,6 @@
 import { prisma } from '../../../../lib/prisma.js';
-import { User } from '@prisma/client';
+import type { User } from '@prisma/client';
+import crypto from 'crypto';
 
 export class PatientService {
   static async findUserByPhone(phoneNumber: string) {

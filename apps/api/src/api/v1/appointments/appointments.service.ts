@@ -6,7 +6,8 @@
 
 import { prisma } from '../../../lib/prisma.js';
 import { AppointmentType } from './appointments.dto.js';
-import { AppointmentStatus, User, UserRole } from '@prisma/client';
+import { AppointmentStatus, UserRole } from '@prisma/client';
+import type { User } from '@prisma/client';
 import crypto from 'crypto';
 
 export class AppointmentService {

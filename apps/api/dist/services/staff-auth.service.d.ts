@@ -1,4 +1,4 @@
-import { User, UserRole } from '@prisma/client';
+import type { User, UserRole } from '@prisma/client';
 export interface StaffLoginResult {
     user: {
         user_id: string;

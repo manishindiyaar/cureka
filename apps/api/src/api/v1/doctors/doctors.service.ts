@@ -1,6 +1,7 @@
-import { User, UserRole } from '@prisma/client';
+import type { User, UserRole } from '@prisma/client';
 import { prisma } from '../../../lib/prisma.js';
 import { PasswordService } from '../../../services/password.service.js';
+import crypto from 'crypto';
 import { CreateDoctorDto } from './doctors.dto.js';
 
 export class DoctorsService {
@@ -61,9 +62,9 @@ export class DoctorsService {
     const passwordHash = await PasswordService.hashPassword(tempPassword);
 
     // Create user and doctor profile in a transaction
-    const result = await prisma.$transaction(async (prisma) => {
+    const result = await prisma.$transaction(async (tx) => {
       // Create user
-      const user = await prisma.user.create({
+      const user = await tx.user.create({
         data: {
           id: crypto.randomUUID(),
           email: doctorData.email,

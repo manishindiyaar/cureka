@@ -51,16 +51,16 @@ export class HospitalsService {
     const passwordHash = await PasswordService.hashPassword(tempPassword);
 
     // Create hospital and admin in a transaction
-    const result = await prisma.$transaction(async (prisma) => {
+    const result = await prisma.$transaction(async (tx) => {
       // Create hospital
-      const hospital = await prisma.hospital.create({
+      const hospital = await tx.hospital.create({
         data: {
           name: hospitalData.hospital_name
         }
       });
 
       // Create admin user
-      const user = await prisma.user.create({
+      const user = await tx.user.create({
         data: {
           id: crypto.randomUUID(),
           email: hospitalData.admin_email,

@@ -1,5 +1,6 @@
 import { prisma } from '../../../lib/prisma.js';
 import { PasswordService } from '../../../services/password.service.js';
+import crypto from 'crypto';
 export class DoctorsService {
     static async generateTemporaryPassword(length = 12) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
@@ -40,8 +41,8 @@ export class DoctorsService {
         }
         const tempPassword = await this.generateTemporaryPassword(12);
         const passwordHash = await PasswordService.hashPassword(tempPassword);
-        const result = await prisma.$transaction(async (prisma) => {
-            const user = await prisma.user.create({
+        const result = await prisma.$transaction(async (tx) => {
+            const user = await tx.user.create({
                 data: {
                     id: crypto.randomUUID(),
                     email: doctorData.email,

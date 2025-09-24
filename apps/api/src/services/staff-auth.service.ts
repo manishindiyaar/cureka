@@ -1,4 +1,4 @@
-import { User, UserRole } from '@prisma/client';
+import type { User, UserRole } from '@prisma/client';
 import { PasswordService } from './password.service.js';
 import { prisma } from '../lib/prisma.js';
 import jwt from 'jsonwebtoken';
@@ -183,7 +183,7 @@ export class StaffAuthService {
         full_name: fullName,
         role: user.role,
         hospital_id: user.hospitalId || null,
-        hospital_name: user.hospital?.name || null,
+        hospital_name: null,
         permissions: this.getUserPermissions(user.role)
       },
       access_token: accessToken,

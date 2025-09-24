@@ -125,7 +125,7 @@ export class StaffAuthService {
                 full_name: fullName,
                 role: user.role,
                 hospital_id: user.hospitalId || null,
-                hospital_name: user.hospital?.name || null,
+                hospital_name: null,
                 permissions: this.getUserPermissions(user.role)
             },
             access_token: accessToken,

@@ -47,9 +47,9 @@ export class HospitalsDashboardController {
 
       // Get count of each staff type
       const staffCounts = {
-        ADMIN: hospital.users.filter(u => u.role === 'HOSPITAL_ADMIN').length,
-        DOCTOR: hospital.users.filter(u => u.role === 'DOCTOR').length,
-        PHARMACIST: hospital.users.filter(u => u.role === 'PHARMACIST').length,
+        ADMIN: hospital.users.filter((u: any) => u.role === 'HOSPITAL_ADMIN').length,
+        DOCTOR: hospital.users.filter((u: any) => u.role === 'DOCTOR').length,
+        PHARMACIST: hospital.users.filter((u: any) => u.role === 'PHARMACIST').length,
         TOTAL: hospital.users.length
       };
 
@@ -107,7 +107,7 @@ export class HospitalsDashboardController {
           id: true,
           email: true,
           role: true,
-          isActive: true,
+          passwordTemp: true,
           createdAt: true,
           profile: {
             select: {
@@ -125,11 +125,11 @@ export class HospitalsDashboardController {
       return res.status(200).json({
         success: true,
         data: {
-          staff: staff.map(user => ({
+          staff: staff.map((user: any) => ({
             id: user.id,
             email: user.email,
             role: user.role,
-            is_active: user.isActive,
+            is_active: user.passwordTemp || false,
             created_at: user.createdAt,
             full_name: user.profile?.fullName || null,
             specialization: user.role === 'DOCTOR' ? user.doctor?.specialty : null,
@@ -189,8 +189,8 @@ export class HospitalsDashboardController {
       const passwordHash = await PasswordService.hashPassword(tempPassword);
 
       // Create doctor user
-      const doctor = await prisma.$transaction(async (prisma) => {
-        return await prisma.user.create({
+      const doctor = await prisma.$transaction(async (tx) => {
+        return await tx.user.create({
           data: {
             id: crypto.randomUUID(),
             email: email,
@@ -203,21 +203,13 @@ export class HospitalsDashboardController {
             updatedAt: new Date(),
             profile: {
               create: {
-                fullName: full_name || `${first_name} ${last_name}`,
-                email: email,
-                phone: phone
+                fullName: full_name || `${first_name} ${last_name}`
               }
             },
             doctor: {
               create: {
                 hospitalId: adminHospitalId,
-                specialty: specialization,
-                licenseNumber: license_number,
-                firstName: first_name,
-                lastName: last_name,
-                phone: phone,
-                dateOfBirth: date_of_birth,
-                gender: gender
+                specialty: specialization
               }
             }
           },

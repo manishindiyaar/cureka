@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 import { prisma } from '../lib/prisma.js'
 
 
-import { UserRole } from '@prisma/client';
+import type { UserRole } from '@prisma/client';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
