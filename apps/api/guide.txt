@@ -3,3 +3,15 @@ npx prisma studio
 
 #this is for checking linter errors
 pnpm tsc --noEmit 
+
+
+To deploy successfully to Render:
+
+  1. Set the build command to:
+  npm install --workspace=@cureka/api
+  npm run build --workspace=@cureka/api
+  npx prisma generate --workspace=@cureka/api
+  npx prisma migrate deploy
+  2. Set the start command to:
+  npm run start --workspace=@cureka/api
+  3. Or use the render.yaml blueprint I created which configures it properly.

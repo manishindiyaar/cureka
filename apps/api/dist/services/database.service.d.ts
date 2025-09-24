@@ -27,7 +27,7 @@ export declare class DatabaseService {
     } & {
         createdAt: Date;
         id: string;
-        role: import("@prisma/client").$Enums.UserRole;
+        role: import(".prisma/client").$Enums.UserRole;
         phone: string | null;
         email: string | null;
         passwordHash: string | null;
@@ -48,7 +48,7 @@ export declare class DatabaseService {
     } & {
         createdAt: Date;
         id: string;
-        role: import("@prisma/client").$Enums.UserRole;
+        role: import(".prisma/client").$Enums.UserRole;
         phone: string | null;
         email: string | null;
         passwordHash: string | null;
@@ -72,7 +72,7 @@ export declare class DatabaseService {
         createdAt: Date;
         id: number;
     } | null>;
-    static deleteOtp(number: string): Promise<import("@prisma/client").Prisma.BatchPayload>;
-    static cleanupExpiredOtps(minutes?: number): Promise<import("@prisma/client").Prisma.BatchPayload>;
+    static deleteOtp(number: string): Promise<import(".prisma/client").Prisma.BatchPayload>;
+    static cleanupExpiredOtps(minutes?: number): Promise<import(".prisma/client").Prisma.BatchPayload>;
 }
 //# sourceMappingURL=database.service.d.ts.map

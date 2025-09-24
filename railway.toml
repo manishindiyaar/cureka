@@ -1,0 +1,12 @@
+[build]
+# Build command specific to the API package
+buildCommand = "cd apps/api && npm install && npx prisma generate && npm run build"
+
+[deploy]
+# Start command for the API
+startCommand = "cd apps/api && npx prisma migrate deploy && npm run start"
+
+
+[environments.prod]
+# Node.js version can be specified
+nodeVersion = "18"
