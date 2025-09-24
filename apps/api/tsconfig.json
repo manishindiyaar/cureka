@@ -3,13 +3,8 @@
   "compilerOptions": {
     "lib": ["ES2022"],
     "module": "ESNext",
-    "target": "ES2022",
     "moduleResolution": "node",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/api/*": ["./src/api/*"]
-    },
+    "target": "ES2022",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "rootDir": "src",
@@ -17,7 +12,16 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/api/*": ["./src/api/*"]
+    },
+    "types": ["node", "express", "jsonwebtoken", "bcryptjs", "cors"]
   },
   "include": ["src/**/*"],
   "exclude": ["dist", "node_modules"]
