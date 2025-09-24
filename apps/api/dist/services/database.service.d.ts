@@ -1,29 +1,29 @@
 export declare class DatabaseService {
     static healthCheck(): Promise<boolean>;
-    static getUserById(id: string): Promise<({
+    static getUserById(id: string): Promise<{
         profile: {
             userId: string;
             fullName: string;
             profileImageUrl: string | null;
-        } | null;
+        };
         patient: {
             userId: string;
             dateOfBirth: Date | null;
-        } | null;
+        };
         doctor: {
             userId: string;
             hospitalId: string;
             specialty: string | null;
-        } | null;
+        };
         pharmacist: {
             userId: string;
             hospitalId: string;
             pharmacyName: string | null;
-        } | null;
+        };
         hospitalAdmin: {
             userId: string;
             hospitalId: string;
-        } | null;
+        };
     } & {
         createdAt: Date;
         id: string;
@@ -38,13 +38,13 @@ export declare class DatabaseService {
         loginAttempts: number | null;
         lockoutUntil: Date | null;
         updatedAt: Date;
-    }) | null>;
+    }>;
     static createUser(data: any): Promise<{
         profile: {
             userId: string;
             fullName: string;
             profileImageUrl: string | null;
-        } | null;
+        };
     } & {
         createdAt: Date;
         id: string;
@@ -71,7 +71,7 @@ export declare class DatabaseService {
         otp: number;
         createdAt: Date;
         id: number;
-    } | null>;
+    }>;
     static deleteOtp(number: string): Promise<import("@prisma/client").Prisma.BatchPayload>;
     static cleanupExpiredOtps(minutes?: number): Promise<import("@prisma/client").Prisma.BatchPayload>;
 }

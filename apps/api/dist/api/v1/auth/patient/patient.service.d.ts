@@ -13,7 +13,7 @@ export declare class PatientService {
         loginAttempts: number | null;
         lockoutUntil: Date | null;
         updatedAt: Date;
-    } | null>;
+    }>;
     static createUser(phoneNumber: string): Promise<{
         createdAt: Date;
         id: string;
