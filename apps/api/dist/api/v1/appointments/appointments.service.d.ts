@@ -40,8 +40,8 @@ export declare class AppointmentService {
         doctorId: string;
         startTs: Date;
         endTs: Date;
-        status: import(".prisma/client").$Enums.AppointmentStatus;
-        calRawPayload: import("@prisma/client/runtime/library.js").JsonValue | null;
+        status: import("@prisma/client").$Enums.AppointmentStatus;
+        calRawPayload: import("@prisma/client/runtime/library").JsonValue | null;
         lastSyncedAt: Date | null;
     }>;
     static getPatientAppointments(patientId: string): Promise<any[]>;

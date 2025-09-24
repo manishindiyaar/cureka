@@ -3,7 +3,6 @@
   "compilerOptions": {
     "lib": ["ES2022"],
     "module": "ESNext",
-    "moduleResolution": "node",
     "target": "ES2022",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -14,14 +13,14 @@
     "sourceMap": true,
     "baseUrl": ".",
     "skipLibCheck": true,
+    "moduleResolution": "bundler",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": ["./src/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/api/*": ["./src/api/*"]
-    },
-    "types": ["node", "express", "jsonwebtoken", "bcryptjs", "cors"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["dist", "node_modules"]

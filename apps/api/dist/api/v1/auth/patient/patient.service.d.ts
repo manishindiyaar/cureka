@@ -2,7 +2,7 @@ export declare class PatientService {
     static findUserByPhone(phoneNumber: string): Promise<{
         createdAt: Date;
         id: string;
-        role: import(".prisma/client").$Enums.UserRole;
+        role: import("@prisma/client").$Enums.UserRole;
         phone: string | null;
         email: string | null;
         passwordHash: string | null;
@@ -17,7 +17,7 @@ export declare class PatientService {
     static createUser(phoneNumber: string): Promise<{
         createdAt: Date;
         id: string;
-        role: import(".prisma/client").$Enums.UserRole;
+        role: import("@prisma/client").$Enums.UserRole;
         phone: string | null;
         email: string | null;
         passwordHash: string | null;
@@ -32,7 +32,7 @@ export declare class PatientService {
     static updateUserLastLogin(userId: string): Promise<{
         createdAt: Date;
         id: string;
-        role: import(".prisma/client").$Enums.UserRole;
+        role: import("@prisma/client").$Enums.UserRole;
         phone: string | null;
         email: string | null;
         passwordHash: string | null;
