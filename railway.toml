@@ -1,6 +1,6 @@
 [build]
 # Build command specific to the API package
-buildCommand = "cd apps/api && npm install && npx prisma generate && npm run build"
+buildCommand = "cd apps/api && npm install --production=false && npx prisma generate && npm run build"
 
 [deploy]
 # Start command for the API
