@@ -3,7 +3,8 @@
 // - For Android emulator: http://10.0.2.2:3000/api/v1
 // - For iOS simulator: http://localhost:3000/api/v1
 
-export const API_BASE = `http://localhost:3000/api/v1`;
+// export const API_BASE = `http://localhost:3000/api/v1`;
+export const API_BASE = `https://cureka.onrender.com/api/v1`;
 
 export const endpoints = {
   auth: {

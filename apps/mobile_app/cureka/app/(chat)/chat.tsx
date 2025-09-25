@@ -1,4 +1,5 @@
+import { Redirect } from 'expo-router';
+
 export default function ChatScreen() {
-  // chat screen implementation pending
-  return null;
+  return <Redirect href="/(chat)/voice-chat" />;
 }

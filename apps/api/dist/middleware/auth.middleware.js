@@ -189,6 +189,18 @@ export const authorizePatient = async (req, res, next) => {
         });
     }
 };
+export const verifyAccessToken = async (token) => {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, JWT_SECRET, (err, user) => {
+            if (err) {
+                reject(new Error('Invalid token'));
+            }
+            else {
+                resolve(user);
+            }
+        });
+    });
+};
 export const authorizeAppointmentOwner = async (req, res, next) => {
     try {
         const userId = req.user?.userId;

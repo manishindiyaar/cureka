@@ -4,9 +4,7 @@
 - make sure u write node test for each function 
 - for the database use supabase hosted db.
 
-- Completed Story for mobile_app  Story-0-File-Structure-Setup.md - File structure setup and configuration
-  Story-0.1-Authentication-UI.md -> these two are executed properly.
-
+- Refer @/Users/manish/Desktop/cureka/sara_tests/AUTH_TESTING_GUIDE.md for authentication details.
 - auth api is i m able to get otp and able to login with otp with proper token based approach bacally basic apis are done.
 
 - we will be working with @mobile_app/cureka directory.and we will use react native with expo for making the app.

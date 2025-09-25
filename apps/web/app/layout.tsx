@@ -1,7 +1,7 @@
 import './globals.css'
-import { Inter } from '@next/font/google'
+import { Inter } from 'next/font/google'
 import { ReactQueryProvider } from '../components/ReactQueryProvider'
-import { Toaster } from 'react-hot-toast'
+import { ToastProvider } from '../components/ui/Toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,8 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ReactQueryProvider>
-          {children}
-          <Toaster position="top-right" />
+          <ToastProvider>
+            {children}
+          </ToastProvider>
         </ReactQueryProvider>
       </body>
     </html>

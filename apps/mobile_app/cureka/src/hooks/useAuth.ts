@@ -73,6 +73,7 @@ export function useAuth() {
       // Store tokens securely
       await SecureStore.setItemAsync('accessToken', data.data.access_token);
       await SecureStore.setItemAsync('refreshToken', data.data.refresh_token || '');
+      await SecureStore.setItemAsync('patientId', data.data.user.user_id);
 
       const tokens = {
         accessToken: data.data.access_token,
@@ -97,6 +98,7 @@ export function useAuth() {
     try {
       await SecureStore.deleteItemAsync('accessToken');
       await SecureStore.deleteItemAsync('refreshToken');
+      await SecureStore.deleteItemAsync('patientId');
       setTokens(null);
     } catch (error) {
       console.error('Logout error:', error);

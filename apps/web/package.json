@@ -1,17 +1,41 @@
 {
-  "name": "web",
-  "version": "1.0.0",
-  "description": "Next.js Web App for Staff Dashboards",
+  "name": "ea338ba735063403a7a14e78ebbfe35f4b4c8de3b43b52170ec32269c3fb210d",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
     "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "clean": "rm -rf .next"
+    "preview": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.8",
+    "@kombai/react-error-boundary": "^1.1.0",
+    "@tanstack/react-query": "^5.90.2",
+    "date-fns": "^2.30.0",
+    "lucide-react": "^0.263.1",
+    "next": "14.2.33",
+    "postcss": "^8.5.6",
+    "postcss-import": "^16.1.1",
+    "postcss-preset-env": "^10.4.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-query": "^3.39.3",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.17",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "comment-json": "^4.2.5",
+    "env-cmd": "^11.0.0",
+    "ts-morph": "^27.0.0",
+    "typescript": "^5",
+    "webpack": "^5.101.3"
+  },
+  "type": "module",
+  "strictDependencies": {
     "next": "^13.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -28,9 +52,7 @@
     "tailwind-merge": "^1.13.0",
     "lucide-react": "^0.263.0",
     "@headlessui/react": "^1.7.0",
-    "@heroicons/react": "^2.0.0"
-  },
-  "devDependencies": {
+    "@heroicons/react": "^2.0.0",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",

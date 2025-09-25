@@ -1,14 +1,35 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Colors } from '@/constants/colors';
+import { useAuth } from '@/hooks/useAuth';
 
 const { width } = Dimensions.get('window');
 
 export default function WelcomeSlides() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const router = useRouter();
+  const { checkAuthStatus } = useAuth();
+
+  // Check if we're already authenticated on mount
+  useEffect(() => {
+    const checkExistingAuth = async () => {
+      // Try to load existing tokens with checkAuthStatus
+      const isAuthenticated = await checkAuthStatus();
+
+      if (isAuthenticated) {
+        // User is authenticated, redirect to tabs
+        router.replace('/(tabs)');
+        return;
+      }
+      // Not authenticated, show welcome screen
+      setIsCheckingAuth(false);
+    };
+
+    checkExistingAuth();
+  }, [checkAuthStatus]);
 
   const slides = [
     {
@@ -38,6 +59,19 @@ export default function WelcomeSlides() {
       router.push('/(auth)/phone');
     }
   };
+
+  // Show loading screen while checking auth
+  if (isCheckingAuth) {
+    return (
+      <View style={styles.container}>
+        <StatusBar style="dark" />
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={Colors.primaryDark} />
+          <Text style={styles.loadingText}>Checking authentication...</Text>
+        </View>
+      </View>
+    );
+  }
 
   const handleSkip = () => {
     router.push('/(auth)/phone');
@@ -198,5 +232,16 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 16,
     fontWeight: '600',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: Colors.gray[700],
   },
 });

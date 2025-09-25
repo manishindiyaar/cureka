@@ -5,13 +5,19 @@
     "jsx": "react-native",
     "lib": [
       "dom",
-      "esnext"
+      "es2015",
+      "es2016",
+      "es2017",
+      "es2018",
+      "es2019",
+      "es2020",
+      "es2021"
     ],
     "moduleResolution": "bundler",
     "module": "esnext",
     "resolveJsonModule": true,
     "strict": true,
-    "target": "esnext",
+    "target": "es2020",
     "baseUrl": ".",
     "paths": {
       "@/*": [

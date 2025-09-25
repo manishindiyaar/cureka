@@ -4,5 +4,6 @@ export declare const authorizeHospitalAdmin: (req: Request, res: Response, next:
 export declare const authorizeDoctor: (req: Request, res: Response, next: NextFunction) => Promise<void>;
 export declare const authorizePharmacist: (req: Request, res: Response, next: NextFunction) => Promise<void>;
 export declare const authorizePatient: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+export declare const verifyAccessToken: (token: string) => Promise<any>;
 export declare const authorizeAppointmentOwner: (req: Request, res: Response, next: NextFunction) => Promise<void>;
 //# sourceMappingURL=auth.middleware.d.ts.map

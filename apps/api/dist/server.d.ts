@@ -1,4 +1,3 @@
-import express from 'express';
-declare const app: express.Express;
-export default app;
+import { Server as SocketIOServer } from 'socket.io';
+export declare const io: SocketIOServer<import("socket.io").DefaultEventsMap, import("socket.io").DefaultEventsMap, import("socket.io").DefaultEventsMap, any>;
 //# sourceMappingURL=server.d.ts.map

@@ -249,6 +249,22 @@ export const authorizePatient = async (req: Request, res: Response, next: NextFu
 };
 
 /**
+ * Verify Access Token
+ * Validates JWT token and returns user data
+ */
+export const verifyAccessToken = async (token: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, JWT_SECRET, (err: any, user: any) => {
+      if (err) {
+        reject(new Error('Invalid token'));
+      } else {
+        resolve(user);
+      }
+    });
+  });
+};
+
+/**
  * Authorize Appointment Owner
  * Ensures the authenticated user owns the appointment resource
  */

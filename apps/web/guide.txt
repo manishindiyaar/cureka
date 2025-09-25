@@ -1,0 +1,38 @@
+Run your development server:
+
+npm run dev
+Open your browser and go to:
+
+http://localhost:3000
+You'll see the new WeHealth minimalist login page with:
+
+Split-screen design (login form on left, doctor image on right)
+Blue/orange gradient theme
+WeHealth logo
+Professional medical imagery
+What I've Done:
+✅ Created new components:
+
+MinimalistLogin.tsx - The new beautiful login page
+WeHealthLogo.tsx - Custom WeHealth branding
+✅ Updated the main app:
+
+Modified app/page.unified.tsx to use the new MinimalistLogin instead of RoleBasedLogin
+Added new color scheme to tailwind.config.js
+✅ Preserved all functionality:
+
+Same authentication logic
+Same demo credentials work
+Same role-based routing after login
+Demo Credentials (same as before):
+Doctor: anna.smith@cureka.com / doctor123
+Pharmacist: charles.green@cureka.com / pharmacist123
+Admin: admin@cureka.com / admin123
+The Flow:
+Login Page → New minimalist WeHealth design
+After Login → Routes to appropriate dashboard (Doctor/Pharmacist/Admin)
+All existing features → Work exactly the same
+The new login page is now the default entry point while maintaining all the existing functionality of your Doctor, Pharmacist, and Admin dashboards!
+
+
+

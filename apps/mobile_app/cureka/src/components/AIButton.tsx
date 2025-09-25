@@ -1,7 +1,9 @@
-import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableOpacity, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
+import { Colors } from '@/constants/colors';
+import * as SecureStore from 'expo-secure-store';
 
 interface AIButtonProps {
   onPress?: () => void;
@@ -17,10 +19,28 @@ export default function AIButton({
   style,
 }: AIButtonProps) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const defaultPress = () => {
-    // Navigate to chat interface or directly start AI session
-    router.push('/(chat)/chat' as any);
+  const defaultPress = async () => {
+    try {
+      setIsLoading(true);
+
+      // Check authentication
+      const authToken = await SecureStore.getItemAsync('accessToken');
+      if (!authToken) {
+        alert('Please login to use AI assistant');
+        return;
+      }
+
+      // Navigate to voice chat with authentication check
+      router.push('/(chat)/chat');
+
+    } catch (error) {
+      console.error('Error starting AI session:', error);
+      alert('Failed to start AI session. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const buttonSizeStyle = {
@@ -35,15 +55,20 @@ export default function AIButton({
     <TouchableOpacity
       style={[styles.button, buttonSizeStyle, style]}
       onPress={onPress || defaultPress}
+      disabled={isLoading}
       accessibilityRole="button"
       accessibilityLabel={title}
       accessibilityHint="Double tap to start a conversation with our AI assistant"
       accessible={true}
     >
       <View style={styles.buttonContent}>
-        <FontAwesome name="comments" size={iconSize} color="#ffffff" style={styles.icon} />
+        {isLoading ? (
+          <ActivityIndicator size="small" color="#ffffff" style={styles.loadingIndicator} />
+        ) : (
+          <FontAwesome name="microphone" size={iconSize} color="#ffffff" style={styles.icon} />
+        )}
         <Text style={[styles.buttonText, { fontSize: size === 'large' ? 18 : 16 }]}>
-          {title}
+          {isLoading ? 'Connecting...' : title}
         </Text>
       </View>
     </TouchableOpacity>
@@ -52,10 +77,10 @@ export default function AIButton({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#1f345a',
+    backgroundColor: Colors.primary,
     borderRadius: 50,
     elevation: 5,
-    shadowColor: '#000000',
+    shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -69,8 +94,11 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 12,
   },
+  loadingIndicator: {
+    marginRight: 12,
+  },
   buttonText: {
-    color: '#ffffff',
+    color: Colors.white,
     fontWeight: '600',
     textAlign: 'center',
   },
