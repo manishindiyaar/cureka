@@ -2,18 +2,11 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { vapiService } from '../../../../services/vapi.service.js';
 
-interface AuthenticatedRequest extends Request {
-  user?: {
-    userId: string;
-    role: string;
-  };
-}
-
 /**
  * Handle Vapi session configuration request
  * Validates authentication and returns safe configuration for mobile app
  */
-export const handleVapiSession = async (req: AuthenticatedRequest, res: Response) => {
+export const handleVapiSession = async (req: Request, res: Response) => {
   try {
     // Check if user is authenticated via JWT
     if (!req.user || !req.user.userId) {

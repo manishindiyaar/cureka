@@ -90,41 +90,33 @@ export function broadcastVoiceEvent(patientId, event, targetDeviceId) {
 export async function sendPushNotification(patientId, event) {
     try {
         const patient = await prisma.patient.findUnique({
-            where: { id: patientId },
+            where: { userId: patientId },
             select: {
                 userId: true,
                 user: {
                     select: {
-                        pushToken: true
+                        id: true
                     }
                 }
             }
         });
-        if (!patient?.user?.pushToken) {
-            console.log(`No push token for patient ${patientId}`);
+        if (!patient?.user?.id) {
+            console.log(`No userId found for patient ${patientId}`);
             return;
         }
-        const response = await fetch('https://fcm.googleapis.com/fcm/send', {
-            method: 'POST',
-            headers: {
-                'Authorization': `key=${process.env.FCM_SERVER_KEY}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                to: patient.user.pushToken,
-                data: event,
-                android: {
-                    priority: 'high',
-                    timeToLive: 60
-                },
-                ios: {
-                    priority: 10
-                }
-            })
+        const user = await prisma.user.findUnique({
+            where: { id: patientId },
+            select: {
+                email: true,
+                phone: true
+            }
         });
-        if (!response.ok) {
-            console.error('Failed to send push notification');
+        if (!user) {
+            console.log(`No user found for patient ${patientId}`);
+            return;
         }
+        console.log(`Skipping push notification for patient ${patientId} - pushToken field not available in schema`);
+        return;
     }
     catch (error) {
         console.error('Push notification error:', error);
