@@ -3,12 +3,12 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import http from 'http';
-import { Server as SocketIOServer } from 'socket.io';
+import { Server } from 'socket.io';
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
-export const io = new SocketIOServer(server, {
+export const io = new Server(server, {
     cors: {
         origin: "*",
         methods: ["GET", "POST"]

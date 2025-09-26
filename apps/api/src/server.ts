@@ -3,7 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import http from 'http';
-import { Server as SocketIOServer } from 'socket.io';
+import { Server } from 'socket.io';
 
 // Load environment variables
 dotenv.config();
@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
 // Initialize Socket.IO for real-time communication
-export const io = new SocketIOServer(server, {
+export const io = new Server(server, {
   cors: {
     origin: "*", // Configure based on your frontend
     methods: ["GET", "POST"]
